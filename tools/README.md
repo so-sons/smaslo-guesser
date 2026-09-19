@@ -15,7 +15,7 @@ node -e "const s=require('fs').readFileSync('fs.html','utf8');const i=s.indexOf(
 # 3) 名前でつき合わせ → merged.json（合わなかった機種は match.js の出力を見て build.js の manual / extra に追記）
 node match.js
 node build.js               # → chars.json（kana.js に無いかなは手入力）
-node gen.js                 # → data.src.js（メーカーは gen.js の BRAND 表で販売ブランドに統合）
+node gen.js                 # → data.src.js（メーカーは gen.js の BRAND 表で販売ブランドに統合、タイプは type-override.js で上書き）
 # 4) 画像URLの接頭辞を config.imageBase に合わせて削り、リポジトリ直下へ
 node -e "const fs=require('fs');fs.writeFileSync('../data.src.js',fs.readFileSync('data.src.js','utf8').split('https://www.pachislot-summit.com/wp/wp-content/uploads/').join(''))"
 cd .. && node build-data.js

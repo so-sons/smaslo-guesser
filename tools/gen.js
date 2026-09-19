@@ -1,6 +1,7 @@
 const fs=require('fs');
 const chars=JSON.parse(fs.readFileSync('chars.json','utf8'));
 const {kana,alias}=require('./kana.js');
+const TYPE_OVERRIDE=require('./type-override.js');
 const norm=(s)=>s.normalize('NFKC').replace(/[\s～〜~]/g,'');
 const kmap=new Map(Object.entries(kana).map(([k,v])=>[norm(k),v]));
 const amap=new Map(Object.entries(alias).map(([k,v])=>[norm(k),v]));
@@ -31,7 +32,7 @@ const out=chars.map(c=>{
   const key=norm(c.n);
   const k=c.k||kmap.get(key)||''; if(!k) console.error('NO KANA',c.n);
   const a=amap.get(key)||''; if(a) used.add(key);
-  return { n:c.n, k, a, i:c.i, mk:BRAND[c.mk]||c.mk, mk0:c.mk, ty:c.ty,
+  return { n:c.n, k, a, i:c.i, mk:BRAND[c.mk]||c.mk, mk0:c.mk, ty:TYPE_OVERRIDE[c.n]||c.ty,
     yi: years.indexOf(String(c.y)), d:c.d,
     j1: c.j1==null?null:f1(c.j1)+'枚/G', j1n:c.j1,
     j2: c.j2==null?null:f1(c.j2)+'枚/G', j2n:c.j2,
